@@ -29,9 +29,12 @@
     "homepage": "https://github.com/1stdibs/front-end-quiz#readme",
     "dependencies": {
         "express": "^4.16.2",
+        "material-ui": "^0.20.0",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
-        "react-scripts": "1.1.0"
+        "react-router": "^4.2.0",
+        "react-scripts": "1.1.0",
+        "redux": "^3.7.2"
     },
     "devDependencies": {
         "nodemon": "^1.14.11"
