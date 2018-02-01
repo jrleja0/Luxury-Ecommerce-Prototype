@@ -1,3 +1,38 @@
-/* .App-welcome {
-  text-align: center;
-} */
+.items-grid > div {
+  width: 90%;
+  height: auto;
+  overflow-y: auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin: -2px;
+}
+
+.items-grid > div > div > div {
+  background-color: white;
+}
+
+.tile-container {
+  width: 30%;
+  padding: 2px;
+}
+
+@media (max-width: 991px) {
+  .tile-container {
+    width: 48%;
+  }
+}
+
+@media (max-width: 767px) {
+  .items-grid > div {
+    flex-flow: column wrap;
+  }
+
+  .tile-container {
+    width: 100%;
+  }
+
+  .tile-container img {
+    transform: translateY(0%) !important;
+  }
+}

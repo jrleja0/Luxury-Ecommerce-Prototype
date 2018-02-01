@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import {Browse} from './components/';
 import { fetchItems } from './store';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
 
 class App extends Component {
@@ -13,7 +14,9 @@ class App extends Component {
 
   render() {
     return (
-      <Browse />
+      <MuiThemeProvider>
+        <Browse />
+      </MuiThemeProvider>
     );
   }
 }
@@ -29,5 +32,4 @@ const mapDispatch = (dispatch) => ({
   }
 });
 
-// export default withRouter(connect(mapState, mapDispatch)(App));
-export default connect(mapState, mapDispatch)(App);
+export default withRouter(connect(mapState, mapDispatch)(App));
