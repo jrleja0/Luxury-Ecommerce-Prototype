@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {GridTile} from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
@@ -21,6 +20,9 @@ const Browse = (props) => {
       justifyContent: 'center',
       alignItems: 'stretch',
     },
+    actionFavorite: {
+      fill: '#c2a661',
+    },
   };
 
   return (
@@ -32,16 +34,17 @@ const Browse = (props) => {
           items.map(item => (
             <div className="tile-container" key={item.id}>
               <GridTile
-                title={item.price && item.price.amounts.USD}
+                title={item.price ? item.price.amounts.USD : 'Price Upon Request'}
                 subtitle={item.title}
                 actionIcon={
                   <Checkbox
                     checkedIcon={<ActionFavorite />}
                     uncheckedIcon={<ActionFavoriteBorder />}
+                    iconStyle={styles.actionFavorite}
                   />
                 }
               >
-                <img src={item.image} />
+                <img src={item.image} alt="" />
               </GridTile>
             </div>
           ))

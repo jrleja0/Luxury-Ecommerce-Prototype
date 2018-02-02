@@ -1,3 +1,26 @@
+/* flexbox grid system */
+
+.flex-grid {
+  display: flex;
+}
+
+.flex-grid-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.col-1 {
+  flex: 1;
+}
+
+.col-2 {
+  flex: 2;
+}
+
+/* Browse Page CSS */
+
 .items-grid > div {
   width: 90%;
   height: auto;
@@ -17,6 +40,26 @@
   padding: 2px;
 }
 
+/* Item Page CSS */
+
+.card-container-outer {
+  margin: 10px 5px;
+}
+
+.card-container, .card-container-image, .card-container-description {
+  margin: 10px;
+}
+
+.card-container-description {
+  margin-top: 20px;
+}
+
+.favorite-checkbox > div {
+  justify-content: flex-end;
+}
+
+/* Media Queries */
+
 @media (max-width: 991px) {
   .tile-container {
     width: 48%;
@@ -24,6 +67,10 @@
 }
 
 @media (max-width: 767px) {
+  .flex-grid {
+    display: block;
+  }
+
   .items-grid > div {
     flex-flow: column wrap;
   }
@@ -34,5 +81,10 @@
 
   .tile-container img {
     transform: translateY(0%) !important;
+  }
+
+  .card-container-image {
+    max-width: 400px;
+    margin: 10px auto;
   }
 }
