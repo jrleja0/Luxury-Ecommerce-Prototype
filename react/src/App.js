@@ -15,8 +15,11 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        {/* <Browse /> */}
-        <Item />
+        <Switch>
+          <Route path="/browse" component={Browse} />
+          <Route path="/item" component={Item} />
+          <Redirect to="/browse" />
+        </Switch>
       </MuiThemeProvider>
     );
   }
