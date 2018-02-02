@@ -5,13 +5,14 @@ import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
+import {fetchItems} from '../store';
 
 /*///
  COMPONENT
 *////
 const Browse = (props) => {
 
-  const { items } = props;
+  const { items, totalItems, handleLoadMoreItems } = props;
   console.log(items);
 
   const styles = {
@@ -32,6 +33,15 @@ const Browse = (props) => {
       width: 200,
       margin: 20,
     },
+    loadMoreButtonDisabled: {
+      color: 'rgba(0, 0, 0, 0.4)',
+      border: '4px solid rgba(0, 0, 0, 0.2)',
+      backgroundColor: 'rgba(0, 0, 0, 0.2)',
+      borderRadius: 20,
+      height: 60,
+      width: 200,
+      margin: 20,
+    }
   };
 
   return (
@@ -63,7 +73,17 @@ const Browse = (props) => {
         <FlatButton
           label="Load More"
           rippleColor="#c2a661"
-          style={styles.loadMoreButton}
+          style={
+            !items || items.length === totalItems ?
+            styles.loadMoreButtonDisabled
+            : styles.loadMoreButton
+          }
+          onClick={() => {
+            if (items && items.length) {
+              handleLoadMoreItems(items.length);
+            }
+          }}
+          disabled={!items || items.length === totalItems}
         />
       </div>
     </div>
@@ -74,9 +94,14 @@ const Browse = (props) => {
  CONTAINER
 *////
 const mapState = (state) => ({
-  items: state.itemStore.items
+  items: state.itemStore.items,
+  totalItems: state.itemStore.totalItems,
 });
 
-const mapDispatch = null;
+const mapDispatch = (dispatch) => ({
+  handleLoadMoreItems: (start) => {
+    dispatch(fetchItems({start}));
+  }
+});
 
 export default connect(mapState, mapDispatch)(Browse);

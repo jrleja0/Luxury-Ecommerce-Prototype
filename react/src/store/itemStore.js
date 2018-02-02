@@ -4,18 +4,19 @@ import axios from 'axios';
 const LOAD_ITEMS = 'LOAD_ITEMS';
 
 // ---------- ACTION CREATORS ----------
-const loadItems = items => ({ type: LOAD_ITEMS, items });
+const loadItems = itemData => ({ type: LOAD_ITEMS, itemData });
 
 // ---------- INIT STATE ----------
 const initState = {
-  items: []
+  items: [],
+  totalItems: 0,
 };
 
 // ---------- DISPATCHERS ----------
-export const fetchItems = () =>
+export const fetchItems = (payload) =>
   dispatch =>
-    axios.get('/browse')
-      .then(res => dispatch(loadItems(res.data.items || [] )))
+    axios.get(`/browse?start=${payload.start}`)
+      .then(res => dispatch(loadItems(res.data || {} )))
       .catch(console.error.bind(console));
 
 // ---------- REDUCER ----------
@@ -23,7 +24,8 @@ export default function (state = initState, action) {
   const newState = Object.assign({}, state );
   switch (action.type) {
     case LOAD_ITEMS:
-      newState.items = action.items;
+      newState.items = [...state.items, ...action.itemData.items];
+      newState.totalItems = action.itemData.totalItems;
       break;
 
     default:
