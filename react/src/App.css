@@ -21,6 +21,10 @@
 
 /* Browse Page CSS */
 
+h1 {
+  text-align: center;
+}
+
 .items-grid > div {
   width: 90%;
   height: auto;
@@ -38,6 +42,16 @@
 .tile-container {
   width: 30%;
   padding: 2px;
+}
+
+.tile-container a {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tile-container img {
+  width: 100%;
 }
 
 /* Item Page CSS */

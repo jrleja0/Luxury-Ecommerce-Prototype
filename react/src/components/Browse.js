@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {GridTile} from 'material-ui/GridList';
 import Checkbox from 'material-ui/Checkbox';
@@ -63,7 +64,9 @@ const Browse = (props) => {
                   />
                 }
               >
-                <img src={item.image} alt="" />
+                <Link to={`/item/${item.id}`}>
+                  <img src={item.image} alt="" />
+                </Link>
               </GridTile>
             </div>
           ))
@@ -93,13 +96,13 @@ const Browse = (props) => {
 /*///
  CONTAINER
 *////
-const mapState = (state) => ({
+const mapState = state => ({
   items: state.itemStore.items,
   totalItems: state.itemStore.totalItems,
 });
 
-const mapDispatch = (dispatch) => ({
-  handleLoadMoreItems: (start) => {
+const mapDispatch = dispatch => ({
+  handleLoadMoreItems: start => {
     dispatch(fetchItems({start}));
   }
 });

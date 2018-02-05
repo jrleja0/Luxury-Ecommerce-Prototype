@@ -7,14 +7,15 @@ import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import {fetchItem} from '../store';
 
 /*///
  COMPONENT
 *////
 const Item = (props) => {
 
-  console.log(props.items);
-  const item = props.items[4];
+  const { item } = props;
+  console.log('param', props.match.params.id)
 
   const styles = {
     appBarRoot: {
@@ -111,8 +112,8 @@ const Item = (props) => {
 /*///
  CONTAINER
 *////
-const mapState = (state) => ({
-  items: state.itemStore.items
+const mapState = state => ({
+  item: state.itemStore.item
 });
 
 const mapDispatch = null;
