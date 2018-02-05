@@ -33,6 +33,14 @@ class Item extends Component {
       actionFavorite: {
         fill: '#c2a661',
       },
+      cardActions: {
+        display: 'flex',
+      },
+      flatButton: {
+        color: '#c2a661',
+        border: '2px solid #c2a661',
+        flex: 1,
+      }
     };
 
     return (
@@ -92,9 +100,17 @@ class Item extends Component {
                       {item.measurements && item.measurements.display}
                     </span>
                   </CardText>
-                  <CardActions>
-                    <FlatButton label="Action1" />
-                    <FlatButton label="Action2" />
+                  <CardActions style={styles.cardActions}>
+                    <FlatButton
+                      label="Purchase"
+                      style={styles.flatButton}
+                      onClick={() => alert('You selected "Purchase".')}
+                    />
+                    <FlatButton
+                      label="Make Offer"
+                      style={styles.flatButton}
+                      onClick={() => alert('You selected "Make Offer".')}
+                    />
                   </CardActions>
                 </Card>
               </div>
