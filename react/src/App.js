@@ -7,6 +7,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
 import {fetchItem} from './store';
 
+/*///
+ COMPONENT
+*////
 class App extends Component {
 
   componentDidMount() {
@@ -34,9 +37,6 @@ const mapState = null;
 const mapDispatch = dispatch => ({
   loadInitialData: () => {
     dispatch(fetchItems({start: 0}));
-  },
-  loadItem: id => {
-    dispatch(fetchItem(id));
   },
 });
 

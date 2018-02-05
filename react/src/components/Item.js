@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -12,33 +12,38 @@ import {fetchItem} from '../store';
 /*///
  COMPONENT
 *////
-const Item = (props) => {
+class Item extends Component {
 
-  const { item } = props;
-  console.log('param', props.match.params.id)
+  componentDidMount() {
+    const { loadItem, match } = this.props;
+    loadItem(match.params.id);
+  }
 
-  const styles = {
-    appBarRoot: {
-      backgroundColor: 'white',
-    },
-    appBarTitle: {
-      color: '#222',
-    },
-    actionFavorite: {
-      fill: '#c2a661',
-    },
-  };
+  render() {
+
+    const { item } = this.props;
+
+    const styles = {
+      appBarRoot: {
+        backgroundColor: 'white',
+      },
+      appBarTitle: {
+        color: '#222',
+      },
+      actionFavorite: {
+        fill: '#c2a661',
+      },
+    };
 
     return (
       item ?
       <div>
         <AppBar
-          title={item.seller.company}
+          title={item.seller && item.seller.company}
           iconElementLeft={
             <FlatButton
-              href=""
-              target="_blank"
-              label="Home"
+              href="/browse"
+              label="Browse"
               secondary={true}
               icon={<NavigationChevronLeft />}
               />
@@ -84,7 +89,7 @@ const Item = (props) => {
                     <span>
                       Measurements:
                       <br />
-                      {item.measurements.display}
+                      {item.measurements && item.measurements.display}
                     </span>
                   </CardText>
                   <CardActions>
@@ -107,6 +112,7 @@ const Item = (props) => {
       </div>
       : null
     );
+  }
 }
 
 /*///
@@ -116,6 +122,10 @@ const mapState = state => ({
   item: state.itemStore.item
 });
 
-const mapDispatch = null;
+const mapDispatch = dispatch => ({
+  loadItem: id => {
+    dispatch(fetchItem(id));
+  },
+});
 
 export default connect(mapState, mapDispatch)(Item);
