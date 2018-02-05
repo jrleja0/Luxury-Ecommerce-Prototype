@@ -35,10 +35,6 @@ h1 {
   margin: -2px;
 }
 
-.items-grid > div > div > div {
-  background-color: white;
-}
-
 .tile-container {
   width: 30%;
   padding: 2px;

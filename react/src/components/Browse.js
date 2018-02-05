@@ -6,6 +6,7 @@ import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
+import CircularProgress from 'material-ui/CircularProgress';
 import {fetchItems} from '../store';
 
 /*///
@@ -14,7 +15,6 @@ import {fetchItems} from '../store';
 const Browse = (props) => {
 
   const { items, totalItems, handleLoadMoreItems } = props;
-  console.log(items);
 
   const styles = {
     root: {
@@ -22,9 +22,6 @@ const Browse = (props) => {
       flexWrap: 'wrap',
       justifyContent: 'center',
       alignItems: 'stretch',
-    },
-    actionFavorite: {
-      fill: '#c2a661',
     },
     loadMoreButton: {
       color: '#c2a661',
@@ -47,7 +44,7 @@ const Browse = (props) => {
 
   return (
     <div>
-      <h1 className="">Browse Items Page</h1>
+      <h1 className="">Browse Items</h1>
       <div className="items-grid" style={styles.root}>
         <div>
         { items && items.length ?
@@ -60,7 +57,7 @@ const Browse = (props) => {
                   <Checkbox
                     checkedIcon={<ActionFavorite />}
                     uncheckedIcon={<ActionFavoriteBorder />}
-                    iconStyle={styles.actionFavorite}
+                    iconStyle={{fill: '#c2a661'}}
                   />
                 }
               >
@@ -73,21 +70,32 @@ const Browse = (props) => {
           : null
         }
         </div>
-        <FlatButton
-          label="Load More"
-          rippleColor="#c2a661"
-          style={
-            !items || items.length === totalItems ?
-            styles.loadMoreButtonDisabled
-            : styles.loadMoreButton
-          }
-          onClick={() => {
-            if (items && items.length) {
-              handleLoadMoreItems(items.length);
+        <div style={{position: "relative"}}>
+        { items && items.length ?
+          <FlatButton
+            label="Load More"
+            rippleColor="#c2a661"
+            style={
+              !items || items.length === totalItems ?
+              styles.loadMoreButtonDisabled
+              : styles.loadMoreButton
             }
-          }}
-          disabled={!items || items.length === totalItems}
-        />
+            onClick={() => {
+              if (items && items.length) {
+                handleLoadMoreItems(items.length);
+              }
+            }}
+            disabled={!items || items.length === totalItems}
+          />
+          : <CircularProgress
+              className="spinner"
+              size={60}
+              thickness={4.5}
+              color="#c2a661"
+              style={{margin: '20px auto'}}
+            />
+        }
+        </div>
       </div>
     </div>
   );

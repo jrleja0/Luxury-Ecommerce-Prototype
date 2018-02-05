@@ -5,7 +5,6 @@ import {Browse, Item} from './components';
 import {fetchItems} from './store';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
-import {fetchItem} from './store';
 
 /*///
  COMPONENT
