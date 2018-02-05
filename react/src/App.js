@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
-import {Browse, Item} from './components/';
-import { fetchItems } from './store';
+import {Browse, Item} from './components';
+import {fetchItems} from './store';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
 
+/*///
+ COMPONENT
+*////
 class App extends Component {
 
   componentDidMount() {
@@ -17,7 +20,7 @@ class App extends Component {
       <MuiThemeProvider>
         <Switch>
           <Route path="/browse" component={Browse} />
-          <Route path="/item" component={Item} />
+          <Route path="/item/:id" component={Item} />
           <Redirect to="/browse" />
         </Switch>
       </MuiThemeProvider>
@@ -30,10 +33,10 @@ class App extends Component {
 *////
 const mapState = null;
 
-const mapDispatch = (dispatch) => ({
+const mapDispatch = dispatch => ({
   loadInitialData: () => {
-    dispatch(fetchItems());
-  }
+    dispatch(fetchItems({start: 0}));
+  },
 });
 
 export default withRouter(connect(mapState, mapDispatch)(App));

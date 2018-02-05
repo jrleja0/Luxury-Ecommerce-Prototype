@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -7,37 +7,51 @@ import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import {fetchItem} from '../store';
 
 /*///
  COMPONENT
 *////
-const Item = (props) => {
+class Item extends Component {
 
-  console.log(props.items);
-  const item = props.items[4];
+  componentDidMount() {
+    const { loadItem, match } = this.props;
+    loadItem(match.params.id);
+  }
 
-  const styles = {
-    appBarRoot: {
-      backgroundColor: 'white',
-    },
-    appBarTitle: {
-      color: '#222',
-    },
-    actionFavorite: {
-      fill: '#c2a661',
-    },
-  };
+  render() {
+
+    const { item } = this.props;
+
+    const styles = {
+      appBarRoot: {
+        backgroundColor: 'white',
+      },
+      appBarTitle: {
+        color: '#222',
+      },
+      actionFavorite: {
+        fill: '#c2a661',
+      },
+      cardActions: {
+        display: 'flex',
+      },
+      flatButton: {
+        color: '#c2a661',
+        border: '2px solid #c2a661',
+        flex: 1,
+      }
+    };
 
     return (
       item ?
       <div>
         <AppBar
-          title={item.seller.company}
+          title={item.seller && item.seller.company}
           iconElementLeft={
             <FlatButton
-              href=""
-              target="_blank"
-              label="Home"
+              href="/browse"
+              label="Browse"
               secondary={true}
               icon={<NavigationChevronLeft />}
               />
@@ -83,12 +97,20 @@ const Item = (props) => {
                     <span>
                       Measurements:
                       <br />
-                      {item.measurements.display}
+                      {item.measurements && item.measurements.display}
                     </span>
                   </CardText>
-                  <CardActions>
-                    <FlatButton label="Action1" />
-                    <FlatButton label="Action2" />
+                  <CardActions style={styles.cardActions}>
+                    <FlatButton
+                      label="Purchase"
+                      style={styles.flatButton}
+                      onClick={() => alert('You selected "Purchase".')}
+                    />
+                    <FlatButton
+                      label="Make Offer"
+                      style={styles.flatButton}
+                      onClick={() => alert('You selected "Make Offer".')}
+                    />
                   </CardActions>
                 </Card>
               </div>
@@ -106,15 +128,20 @@ const Item = (props) => {
       </div>
       : null
     );
+  }
 }
 
 /*///
  CONTAINER
 *////
-const mapState = (state) => ({
-  items: state.itemStore.items
+const mapState = state => ({
+  item: state.itemStore.item
 });
 
-const mapDispatch = null;
+const mapDispatch = dispatch => ({
+  loadItem: id => {
+    dispatch(fetchItem(id));
+  },
+});
 
 export default connect(mapState, mapDispatch)(Item);
