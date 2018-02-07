@@ -9,9 +9,19 @@ const getItem = function (itemId) {
     }) || {};
 };
 
+const addsFavoriteProp = function (item, favoriteItems) {
+    if (favoriteItems) {
+        item.favorite =
+            favoriteItems.includes(item.id) ?
+            true : false;
+    }
+    return item;
+};
+
 itemRouter.get('/:id', (req, res) => {
     const id = req.params.id;
-    const item = getItem(id);
+    let item = getItem(id);
+    item = addsFavoriteProp(item, req.session.favoriteItems);
     res.status(200).json(item);
 });
 

@@ -7,14 +7,14 @@ import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import {fetchItems} from '../store';
+import {fetchItems, addFavorite, deleteFavorite} from '../store';
 
 /*///
  COMPONENT
 *////
 const Browse = (props) => {
 
-  const { items, totalItems, handleLoadMoreItems } = props;
+  const { items, totalItems, toggleFavorite, handleLoadMoreItems } = props;
 
   const styles = {
     root: {
@@ -58,6 +58,8 @@ const Browse = (props) => {
                     checkedIcon={<ActionFavorite />}
                     uncheckedIcon={<ActionFavoriteBorder />}
                     iconStyle={{fill: '#c2a661'}}
+                    checked={item.favorite}
+                    onCheck={() => toggleFavorite(item.favorite, item.id)}
                   />
                 }
               >
@@ -112,7 +114,14 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   handleLoadMoreItems: start => {
     dispatch(fetchItems({start}));
-  }
+  },
+  toggleFavorite: (favorite, id) => {
+    if (favorite) {
+      dispatch(deleteFavorite(id));
+    } else {
+      dispatch(addFavorite(id));
+    }
+  },
 });
 
 export default connect(mapState, mapDispatch)(Browse);

@@ -7,7 +7,7 @@ import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
-import {fetchItem} from '../store';
+import {fetchItem, addFavorite, deleteFavorite} from '../store';
 
 /*///
  COMPONENT
@@ -21,26 +21,14 @@ class Item extends Component {
 
   render() {
 
-    const { item } = this.props;
+    const { item, toggleFavorite } = this.props;
 
     const styles = {
-      appBarRoot: {
-        backgroundColor: 'white',
-      },
-      appBarTitle: {
-        color: '#222',
-      },
-      actionFavorite: {
-        fill: '#c2a661',
-      },
-      cardActions: {
-        display: 'flex',
-      },
       flatButton: {
         color: '#c2a661',
         border: '2px solid #c2a661',
         flex: 1,
-      }
+      },
     };
 
     return (
@@ -56,8 +44,8 @@ class Item extends Component {
               icon={<NavigationChevronLeft />}
               />
           }
-          style={styles.appBarRoot}
-          titleStyle={styles.appBarTitle}
+          style={{backgroundColor: 'white'}}
+          titleStyle={{color: '#222'}}
         />
         <div className="flex-grid card-container-outer">
           <div className="col-1">
@@ -69,7 +57,9 @@ class Item extends Component {
                       className="favorite-checkbox"
                       checkedIcon={<ActionFavorite />}
                       uncheckedIcon={<ActionFavoriteBorder />}
-                      iconStyle={styles.actionFavorite}
+                      iconStyle={{fill: '#c2a661'}}
+                      checked={item.favorite}
+                      onCheck={() => toggleFavorite(item.favorite, item.id)}
                     />
                   }
                 />
@@ -100,7 +90,7 @@ class Item extends Component {
                       {item.measurements && item.measurements.display}
                     </span>
                   </CardText>
-                  <CardActions style={styles.cardActions}>
+                  <CardActions style={{display: 'flex'}}>
                     <FlatButton
                       label="Purchase"
                       style={styles.flatButton}
@@ -141,6 +131,13 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   loadItem: id => {
     dispatch(fetchItem(id));
+  },
+  toggleFavorite: (favorite, id) => {
+    if (favorite) {
+      dispatch(deleteFavorite(id));
+    } else {
+      dispatch(addFavorite(id));
+    }
   },
 });
 
