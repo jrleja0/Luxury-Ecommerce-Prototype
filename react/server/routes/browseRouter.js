@@ -14,8 +14,21 @@ const getItems = function (payload) {
     };
 };
 
+const addsFavoriteProp = function (response, favoriteItems) {
+    if (favoriteItems) {
+        response.items = response.items.map(item => {
+            item.favorite =
+                favoriteItems.includes(item.id) ?
+                true : false;
+            return item;
+        });
+    }
+    return response;
+};
+
 browseRouter.get('', (req, res)=>{
-    const response = getItems(req.query);
+    let response = getItems(req.query);
+    response = addsFavoriteProp(response, req.session.favoriteItems);
     res.status(200).json(response);
 });
 
