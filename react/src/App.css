@@ -11,12 +11,18 @@
   height: 100%;
 }
 
-.col-1 {
+.col-3 {
   flex: 1;
 }
 
-.col-2 {
+.col-1 {
   flex: 2;
+}
+
+.col-2 {
+  flex: 3;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 /* Browse Page CSS */
@@ -56,19 +62,47 @@ h1 {
   margin: 10px 5px;
 }
 
-.card-container, .card-container-image, .card-container-description {
+.card-container, .card-container-image, .card-container-description, .card-container-col3 {
   margin: 10px;
+}
+
+.card-container-image, .card-container-col3 {
+  flex: 1 2 0%;
 }
 
 .card-container-description {
   margin-top: 20px;
+  flex: 1 2 0%;
 }
 
 .favorite-checkbox > div {
   justify-content: flex-end;
 }
 
+.card-title br {
+  line-height: 50px;
+}
+
+.description-measurements, .card-container-description p {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.card-container-description p {
+  max-width: 550px;
+}
+
+.title-price, .p-item-description {
+  color: #776868;
+}
+
 /* Media Queries */
+
+@media (max-width: 1200px) {
+  .col-3 {
+    display: none;
+  }
+}
 
 @media (max-width: 991px) {
   .tile-container {
@@ -79,6 +113,11 @@ h1 {
 @media (max-width: 767px) {
   .flex-grid {
     display: block;
+  }
+
+  .flex-grid-column {
+    display: block;
+    height: auto;
   }
 
   .items-grid > div {
@@ -96,5 +135,10 @@ h1 {
   .card-container-image {
     max-width: 400px;
     margin: 10px auto;
+  }
+
+  .card-container, .card-container-description {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
