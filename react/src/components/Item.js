@@ -59,8 +59,9 @@ class Item extends Component {
         <AppBar
           title={
             <img
-              src={item.seller && 'https://a.1stdibscdn.com' + item.seller.logo
-              || item.seller && item.seller.company}
+              src={(item.seller && 'https://a.1stdibscdn.com' + item.seller.logo)
+              || (item.seller && item.seller.company)}
+              alt={item.seller && item.seller.company}
             />
           }
           iconElementLeft={
@@ -75,6 +76,9 @@ class Item extends Component {
               }
               style={styles.backButton}
               labelStyle={styles.backButtonLabel}
+              className="button-back-to-browse"
+              hoverColor="#c2a661"
+              rippleColor="yellow"
             />
           }
           style={{backgroundColor: 'white'}}
@@ -139,11 +143,17 @@ class Item extends Component {
                       label="Purchase"
                       style={styles.flatButton}
                       onClick={() => alert('You selected "Purchase".')}
+                      className="button-purchase"
+                      hoverColor="#c2a661"
+                      rippleColor="yellow"
                     />
                     <FlatButton
                       label="Make Offer"
                       style={styles.flatButton}
                       onClick={() => alert('You selected "Make Offer".')}
+                      className="button-make-offer"
+                      hoverColor="#c2a661"
+                      rippleColor="yellow"
                     />
                   </CardActions>
                 </Card>

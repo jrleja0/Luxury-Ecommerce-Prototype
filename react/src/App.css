@@ -96,6 +96,37 @@ h1 {
   color: #776868;
 }
 
+.button-purchase:hover span, .button-make-offer:hover span, .button-back-to-browse:hover span {
+  color: white;
+}
+
+@-webkit-keyframes move-back-to-browse-arrow {
+  0% {
+    fill: #c2a661;
+    left: 0;
+  }
+  10%, 100% {
+    fill: white;
+    left: -15px;
+  }
+}
+@keyframes move-back-to-browse-arrow {
+  0% {
+    fill: #c2a661;
+    left: 0;
+  }
+  10%, 100% {
+    fill: white;
+    left: -15px;
+  }
+}
+
+.button-back-to-browse:hover svg {
+  position: relative;
+  -webkit-animation: 3s infinite move-back-to-browse-arrow;
+  animation: 3s infinite move-back-to-browse-arrow;
+}
+
 /* Media Queries */
 
 @media (max-width: 1200px) {
