@@ -29,7 +29,7 @@ const Browse = (props) => {
       borderRadius: 20,
       height: 60,
       width: 200,
-      margin: 20,
+      margin: '20px auto',
     },
     loadMoreButtonDisabled: {
       color: 'rgba(0, 0, 0, 0.4)',
@@ -38,7 +38,7 @@ const Browse = (props) => {
       borderRadius: 20,
       height: 60,
       width: 200,
-      margin: 20,
+      margin: '20px auto',
     }
   };
 
@@ -64,6 +64,7 @@ const Browse = (props) => {
                 }
               >
                 <Link to={`/item/${item.id}`}>
+                  <div className="div-img-background" />
                   <img src={item.image} alt="" />
                 </Link>
               </GridTile>
@@ -75,8 +76,10 @@ const Browse = (props) => {
         <div style={{position: "relative"}}>
         { items && items.length ?
           <FlatButton
+            className="button-load-more"
             label="Load More"
-            rippleColor="#c2a661"
+            hoverColor="#c2a661"
+            rippleColor="yellow"
             style={
               !items || items.length === totalItems ?
               styles.loadMoreButtonDisabled

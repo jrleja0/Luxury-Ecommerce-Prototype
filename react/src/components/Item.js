@@ -28,46 +28,88 @@ class Item extends Component {
         color: '#c2a661',
         border: '2px solid #c2a661',
         flex: 1,
+        height: '50px',
       },
+      navbarChevronLeft: {
+        width: '48px',
+        height: '48px',
+        margin: 0,
+      },
+      backButton: {
+        color: '#c2a661',
+        textDecoration: 'underline',
+        height: '90%',
+        width: '150px',
+      },
+      backButtonLabel: {
+        fontSize: '18px',
+        padding: 0,
+      },
+      titleStyle: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        color: '#222',
+      }
     };
 
     return (
       item ?
       <div>
         <AppBar
-          title={item.seller && item.seller.company}
+          title={
+            <img
+              src={(item.seller && 'https://a.1stdibscdn.com' + item.seller.logo)
+              || (item.seller && item.seller.company)}
+              alt={item.seller && item.seller.company}
+            />
+          }
           iconElementLeft={
             <FlatButton
               href="/browse"
               label="Browse"
               secondary={true}
-              icon={<NavigationChevronLeft />}
-              />
+              icon={
+                <NavigationChevronLeft
+                  style={styles.navbarChevronLeft}
+                />
+              }
+              style={styles.backButton}
+              labelStyle={styles.backButtonLabel}
+              className="button-back-to-browse"
+              hoverColor="#c2a661"
+              rippleColor="yellow"
+            />
           }
           style={{backgroundColor: 'white'}}
-          titleStyle={{color: '#222'}}
+          titleStyle={styles.titleStyle}
+          className="item-navbar"
         />
         <div className="flex-grid card-container-outer">
           <div className="col-1">
-            <div className="card-container-image">
-              <Card>
-                <CardHeader
-                  children={
-                    <Checkbox
-                      className="favorite-checkbox"
-                      checkedIcon={<ActionFavorite />}
-                      uncheckedIcon={<ActionFavoriteBorder />}
-                      iconStyle={{fill: '#c2a661'}}
-                      checked={item.favorite}
-                      onCheck={() => toggleFavorite(item.favorite, item.id)}
-                    />
-                  }
-                />
-                <CardMedia>
-                  <img src={item.image} alt="" />
-                </CardMedia>
-                <CardText />
-              </Card>
+            <div className="flex-grid-column">
+              <div className="card-container-image">
+                <Card
+                  style={{height: '100%'}}
+                >
+                  <CardHeader
+                    children={
+                      <Checkbox
+                        className="favorite-checkbox"
+                        checkedIcon={<ActionFavorite />}
+                        uncheckedIcon={<ActionFavoriteBorder />}
+                        iconStyle={{fill: '#c2a661'}}
+                        checked={item.favorite}
+                        onCheck={() => toggleFavorite(item.favorite, item.id)}
+                      />
+                    }
+                  />
+                  <CardMedia>
+                    <img src={item.image} alt="" />
+                  </CardMedia>
+                  <CardText />
+                </Card>
+              </div>
             </div>
           </div>
           <div className="col-2">
@@ -79,13 +121,19 @@ class Item extends Component {
                       <span>
                         {item.title}
                         <br />
-                        {item.price ? item.price.amounts.USD : 'Price Upon Request'}
+                        <span
+                          className="title-price"
+                        >{item.price ? item.price.amounts.USD : 'Price Upon Request'}
+                        </span>
                       </span>
                     }
+                    className="card-title"
                   />
-                  <CardText>
-                    <span>
-                      Measurements:
+                  <CardText
+                    style={{paddingTop: 0}}
+                  >
+                    <span className="description-measurements">
+                      <b>Measurements:</b>
                       <br />
                       {item.measurements && item.measurements.display}
                     </span>
@@ -95,22 +143,43 @@ class Item extends Component {
                       label="Purchase"
                       style={styles.flatButton}
                       onClick={() => alert('You selected "Purchase".')}
+                      className="button-purchase"
+                      hoverColor="#c2a661"
+                      rippleColor="yellow"
                     />
                     <FlatButton
                       label="Make Offer"
                       style={styles.flatButton}
                       onClick={() => alert('You selected "Make Offer".')}
+                      className="button-make-offer"
+                      hoverColor="#c2a661"
+                      rippleColor="yellow"
                     />
                   </CardActions>
                 </Card>
               </div>
               <div className="card-container-description">
-                <Card>
+                <Card
+                  style={{height: '100%'}}
+                >
                   <CardText>
-                    <p>{item.description}</p>
-                    <p>Creator: {item.creators}</p>
+                    <p className="p-item-description">
+                      {item.description}
+                    </p>
+                    {item.creators &&
+                    <p><b>Creator:</b> {item.creators}</p>
+                    }
                   </CardText>
                 </Card>
+              </div>
+            </div>
+          </div>
+          <div className="col-3">
+            <div className="flex-grid-column">
+              <div className="card-container-col3">
+                <Card
+                  style={{height: '100%'}}
+                />
               </div>
             </div>
           </div>
