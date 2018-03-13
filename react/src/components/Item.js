@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -66,7 +67,6 @@ class Item extends Component {
           }
           iconElementLeft={
             <FlatButton
-              href="/browse"
               label="Browse"
               secondary={true}
               icon={
@@ -79,6 +79,9 @@ class Item extends Component {
               className="button-back-to-browse"
               hoverColor="#c2a661"
               rippleColor="yellow"
+              containerElement={
+                <Link to="/browse" />
+              }
             />
           }
           style={{backgroundColor: 'white'}}
@@ -194,7 +197,7 @@ class Item extends Component {
  CONTAINER
 *////
 const mapState = state => ({
-  item: state.itemStore.item
+  item: state.itemStore.item,
 });
 
 const mapDispatch = dispatch => ({
