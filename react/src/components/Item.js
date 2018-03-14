@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import history from '../history';
 import {connect} from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -83,9 +83,15 @@ class Item extends Component {
               className="button-back-to-browse"
               hoverColor="#c2a661"
               rippleColor="yellow"
-              containerElement={
-                <Link to="/browse" />
-              }
+              onClick={() => {
+                switch (history.previousPathname) {
+                  case '/browse/favorites':
+                    history.push('/browse/favorites');
+                    break;
+                  default:
+                    history.push('/browse');
+                }
+              }}
             />
           }
           style={{backgroundColor: 'white'}}

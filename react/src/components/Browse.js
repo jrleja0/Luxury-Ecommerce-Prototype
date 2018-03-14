@@ -8,7 +8,7 @@ import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import {fetchItems, addFavorite, deleteFavorite} from '../store';
+import {fetchItems, fetchFavorites, addFavorite, deleteFavorite} from '../store';
 
 /*///
  COMPONENT
@@ -18,6 +18,9 @@ class Browse extends React.Component {
   componentDidMount() {
     if (history.windowY) {
       window.scrollTo(0, history.windowY);
+    }
+    if (history.location.pathname === '/browse/favorites') {
+      this.props.handleFetchFavorites();
     }
   }
 
@@ -54,6 +57,21 @@ class Browse extends React.Component {
     return (
       <div>
         <h1 className="">Browse Items</h1>
+        <div className="div-filter-input">
+          <span>{'Filter By: '}
+            <FlatButton
+              className="button-load-more"
+              label="Favorites"
+              hoverColor="#c2a661"
+              rippleColor="yellow"
+              style={styles.loadMoreButton}
+              containerElement={
+                <Link to="/browse/favorites" />
+              }
+            >
+            </FlatButton>
+          </span>
+        </div>
         <div className="items-grid" style={styles.root}>
           <div>
           { items && items.length ?
@@ -75,6 +93,7 @@ class Browse extends React.Component {
                   <Link to={`/item/${item.id}`}
                     onClick={() => {
                       history.windowY = window.scrollY;
+                      history.previousPathname = history.location.pathname;
                     }}
                   >
                     <div className="div-img-background" />
@@ -128,6 +147,10 @@ const mapState = state => ({
   totalItems: state.itemStore.totalItems,
 });
 
+const mapStateBrowseFavorites = state => ({
+  items: state.itemStore.favoriteItems,
+});
+
 const mapDispatch = dispatch => ({
   handleLoadMoreItems: start => {
     dispatch(fetchItems({start}));
@@ -139,6 +162,11 @@ const mapDispatch = dispatch => ({
       dispatch(addFavorite(id));
     }
   },
+  handleFetchFavorites: () => {
+    dispatch(fetchFavorites());
+  },
 });
 
 export default connect(mapState, mapDispatch)(Browse);
+
+export const BrowseFavorites = connect(mapStateBrowseFavorites, mapDispatch)(Browse);

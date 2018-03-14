@@ -3,12 +3,14 @@ import axios from 'axios';
 // ---------- ACTION TYPES ----------
 const LOAD_ITEMS = 'LOAD_ITEMS';
 const GET_ITEM = 'GET_ITEM';
+const LOAD_FAVORITES = 'LOAD_FAVORITES';
 const GET_FAVORITE = 'GET_FAVORITE';
 const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
 
 // ---------- ACTION CREATORS ----------
 const loadItems = itemData => ({ type: LOAD_ITEMS, itemData });
 const getItem = item => ({ type: GET_ITEM, item });
+const loadFavorites = items => ({ type: LOAD_FAVORITES, items});
 const getFavorite = id => ({ type: GET_FAVORITE, id });
 const removeFavorite = id => ({ type: REMOVE_FAVORITE, id });
 
@@ -18,6 +20,7 @@ const initState = {
   items: [],
   totalItems: 0,
   item: {},
+  favoriteItems: [],
 };
 
 // ---------- DISPATCHERS ----------
@@ -31,6 +34,19 @@ export const fetchItem = id =>
   dispatch =>
     axios.get(`/item/${id}`)
       .then(res => dispatch(getItem(res.data || {} )))
+      .catch(console.error.bind(console));
+
+export const fetchFavorites = () =>
+  dispatch =>
+    Promise.all([axios.get('/browse?start=0&limit=1000'), axios.get('/session/favorites')])
+      .then(([resItems, resFavoriteItemIDs]) => [resItems.data.items, resFavoriteItemIDs.data])
+      .then(([items, favoriteItemIDs]) => {
+        console.log('here', items, favoriteItemIDs); ///////////////
+        return items.filter(item => {
+          return favoriteItemIDs.includes(item.id);
+        });
+      })
+      .then(favoriteItems => dispatch(loadFavorites(favoriteItems || [] )))
       .catch(console.error.bind(console));
 
 export const addFavorite = id =>
@@ -60,6 +76,9 @@ export default function (state = initState, action) {
       break;
     case GET_ITEM:
       newState.item = action.item;
+      break;
+    case LOAD_FAVORITES:
+      newState.favoriteItems = action.items
       break;
     case GET_FAVORITE:
       newState.items = newState.items.map(item => {

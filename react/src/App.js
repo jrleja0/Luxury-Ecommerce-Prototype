@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
-import {Browse, Item} from './components';
+import {Browse, BrowseFavorites, Item} from './components';
 import {fetchItems} from './store';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
@@ -19,7 +19,8 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <Switch>
-          <Route path="/browse" component={Browse} />
+          <Route path="/browse" exact component={Browse} />
+          <Route path="/browse/favorites" component={BrowseFavorites} />
           <Route path="/item/:id" component={Item} />
           <Redirect to="/browse" />
         </Switch>

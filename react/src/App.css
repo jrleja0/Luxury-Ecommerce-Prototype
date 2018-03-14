@@ -31,6 +31,14 @@ h1 {
   text-align: center;
 }
 
+.div-filter-input {
+  display: flex;
+}
+
+.div-filter-input p {
+  margin: auto;
+}
+
 .items-grid > div {
   width: 90%;
   height: auto;
