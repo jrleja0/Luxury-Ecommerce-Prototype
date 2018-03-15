@@ -31,6 +31,45 @@ h1 {
   text-align: center;
 }
 
+.button-route-browse:hover span, .button-route-favorites:hover span {
+  color: #c2a661;
+}
+
+@-webkit-keyframes add-button-active-route {
+  0% {
+    -webkit-box-shadow: inset 0 0 0 0 #c2a661;
+    box-shadow: inset 0 0 0 0 #c2a661;
+  }
+  100% {
+    -webkit-box-shadow: inset 0 -15px 0 0 #c2a661;
+    box-shadow: inset 0 -15px 0 0 #c2a661;
+  }
+}
+@keyframes add-button-active-route {
+  0% {
+    -webkit-box-shadow: inset 0 0 0 0 #c2a661;
+    box-shadow: inset 0 0 0 0 #c2a661;
+  }
+  100% {
+    -webkit-box-shadow: inset 0 -15px 0 0 #c2a661;
+    box-shadow: inset 0 -15px 0 0 #c2a661;
+  }
+}
+
+.button-route-browse, .button-route-favorites {
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-box-shadow: inset 0 0 0 0 #c2a661;
+  box-shadow: inset 0 0 0 0 #c2a661;
+}
+
+.button-active-route {
+  -webkit-box-shadow: inset 0 -15px 0 0 #c2a661;
+  box-shadow: inset 0 -15px 0 0 #c2a661;
+  -webkit-animation: .75s add-button-active-route;
+  animation: .75s add-button-active-route;
+}
+
 .div-filter-input {
   display: flex;
 }

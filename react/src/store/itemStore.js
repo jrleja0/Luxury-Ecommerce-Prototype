@@ -41,7 +41,6 @@ export const fetchFavorites = () =>
     Promise.all([axios.get('/browse?start=0&limit=1000'), axios.get('/session/favorites')])
       .then(([resItems, resFavoriteItemIDs]) => [resItems.data.items, resFavoriteItemIDs.data])
       .then(([items, favoriteItemIDs]) => {
-        console.log('here', items, favoriteItemIDs); ///////////////
         return items.filter(item => {
           return favoriteItemIDs.includes(item.id);
         });

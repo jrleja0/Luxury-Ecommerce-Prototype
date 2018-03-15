@@ -1,14 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import history from '../history';
 import {connect} from 'react-redux';
-import {GridTile} from 'material-ui/GridList';
-import Checkbox from 'material-ui/Checkbox';
-import ActionFavorite from 'material-ui/svg-icons/action/favorite';
-import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import {fetchItems, fetchFavorites, addFavorite, deleteFavorite} from '../store';
+import {ItemsGrid} from './index';
 
 /*///
  COMPONENT
@@ -18,9 +14,6 @@ class Browse extends React.Component {
   componentDidMount() {
     if (history.windowY) {
       window.scrollTo(0, history.windowY);
-    }
-    if (history.location.pathname === '/browse/favorites') {
-      this.props.handleFetchFavorites();
     }
   }
 
@@ -34,6 +27,7 @@ class Browse extends React.Component {
         flexWrap: 'wrap',
         justifyContent: 'center',
         alignItems: 'stretch',
+        position: 'relative',
       },
       loadMoreButton: {
         color: '#c2a661',
@@ -56,83 +50,37 @@ class Browse extends React.Component {
 
     return (
       <div>
-        <h1 className="">Browse Items</h1>
-        <div className="div-filter-input">
-          <span>{'Filter By: '}
-            <FlatButton
-              className="button-load-more"
-              label="Favorites"
-              hoverColor="#c2a661"
-              rippleColor="yellow"
-              style={styles.loadMoreButton}
-              containerElement={
-                <Link to="/browse/favorites" />
+        <ItemsGrid
+          items={items}
+          toggleFavorite={toggleFavorite}
+        />
+        <div style={styles.root}>
+        { items && items.length ?
+          <FlatButton
+            className="button-load-more"
+            label="Load More"
+            hoverColor="#c2a661"
+            rippleColor="yellow"
+            style={
+              !items || items.length === totalItems ?
+              styles.loadMoreButtonDisabled
+              : styles.loadMoreButton
+            }
+            onClick={() => {
+              if (items && items.length) {
+                handleLoadMoreItems(items.length);
               }
-            >
-            </FlatButton>
-          </span>
-        </div>
-        <div className="items-grid" style={styles.root}>
-          <div>
-          { items && items.length ?
-            items.map(item => (
-              <div className="tile-container" key={item.id}>
-                <GridTile
-                  title={item.price ? item.price.amounts.USD : 'Price Upon Request'}
-                  subtitle={item.title}
-                  actionIcon={
-                    <Checkbox
-                      checkedIcon={<ActionFavorite />}
-                      uncheckedIcon={<ActionFavoriteBorder />}
-                      iconStyle={{fill: '#c2a661'}}
-                      checked={item.favorite}
-                      onCheck={() => toggleFavorite(item.favorite, item.id)}
-                    />
-                  }
-                >
-                  <Link to={`/item/${item.id}`}
-                    onClick={() => {
-                      history.windowY = window.scrollY;
-                      history.previousPathname = history.location.pathname;
-                    }}
-                  >
-                    <div className="div-img-background" />
-                    <img src={item.image} alt="" />
-                  </Link>
-                </GridTile>
-              </div>
-            ))
-            : null
-          }
-          </div>
-          <div style={{position: "relative"}}>
-          { items && items.length ?
-            <FlatButton
-              className="button-load-more"
-              label="Load More"
-              hoverColor="#c2a661"
-              rippleColor="yellow"
-              style={
-                !items || items.length === totalItems ?
-                styles.loadMoreButtonDisabled
-                : styles.loadMoreButton
-              }
-              onClick={() => {
-                if (items && items.length) {
-                  handleLoadMoreItems(items.length);
-                }
-              }}
-              disabled={!items || items.length === totalItems}
+            }}
+            disabled={!items || items.length === totalItems}
+          />
+          : <CircularProgress
+              className="spinner"
+              size={60}
+              thickness={4.5}
+              color="#c2a661"
+              style={{margin: '20px auto'}}
             />
-            : <CircularProgress
-                className="spinner"
-                size={60}
-                thickness={4.5}
-                color="#c2a661"
-                style={{margin: '20px auto'}}
-              />
-          }
-          </div>
+        }
         </div>
       </div>
     );
@@ -145,10 +93,6 @@ class Browse extends React.Component {
 const mapState = state => ({
   items: state.itemStore.items,
   totalItems: state.itemStore.totalItems,
-});
-
-const mapStateBrowseFavorites = state => ({
-  items: state.itemStore.favoriteItems,
 });
 
 const mapDispatch = dispatch => ({
@@ -168,5 +112,3 @@ const mapDispatch = dispatch => ({
 });
 
 export default connect(mapState, mapDispatch)(Browse);
-
-export const BrowseFavorites = connect(mapStateBrowseFavorites, mapDispatch)(Browse);
