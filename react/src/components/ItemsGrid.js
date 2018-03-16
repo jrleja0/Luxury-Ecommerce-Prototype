@@ -6,7 +6,6 @@ import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 
-
 /*///
  COMPONENT
 *////
@@ -39,7 +38,7 @@ const ItemsGrid = (props) => {
                   uncheckedIcon={<ActionFavoriteBorder />}
                   iconStyle={{fill: '#c2a661'}}
                   checked={item.favorite}
-                  onCheck={() => toggleFavorite(item.favorite, item.id)}
+                  onCheck={(evt) => {toggleFavorite(item.favorite, item.id, evt)}}
                 />
               }
             >

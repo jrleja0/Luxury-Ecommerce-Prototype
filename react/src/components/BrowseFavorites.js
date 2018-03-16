@@ -1,6 +1,7 @@
 import React from 'react';
 import history from '../history';
 import {connect} from 'react-redux';
+import $ from 'jquery';
 import CircularProgress from 'material-ui/CircularProgress';
 import {fetchFavorites, addFavorite, deleteFavorite} from '../store';
 import {ItemsGrid} from './index';
@@ -23,6 +24,16 @@ class BrowseFavorites extends React.Component {
 
     const { items, toggleFavorite } = this.props;
 
+    const toggleFavoriteOnFavorites = (favorite, id, evt) => {
+      const tileContainer = $(evt.target).closest('.tile-container');
+      const toggleOpacity = favorite ? 0.3 : 1;
+      const toggleFlexOrder = favorite ? 1 : 0;
+      tileContainer.css('opacity', toggleOpacity);
+      tileContainer.css('order', toggleFlexOrder);
+
+      toggleFavorite(favorite, id);
+    };
+
     const styles = {
       root: {
         display: 'flex',
@@ -37,7 +48,7 @@ class BrowseFavorites extends React.Component {
       <div>
         <ItemsGrid
           items={items}
-          toggleFavorite={toggleFavorite}
+          toggleFavorite={toggleFavoriteOnFavorites}
         />
         <div style={styles.root}>
         { items && items.length === 0 &&

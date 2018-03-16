@@ -27,8 +27,22 @@
 
 /* Browse Page CSS */
 
-h1 {
-  text-align: center;
+.titlebar-browse {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background-color: #222;
+}
+.titlebar-browse h1 {
+  margin: auto;
+  color: #f6f3eb;
+}
+.titlebar-browse h2 {
+  position: absolute;
+  margin: auto 10px;
+  color: black;
+  background-color: #c2a661;
+  border: 1px solid white;
 }
 
 .button-route-browse:hover span, .button-route-favorites:hover span {
@@ -237,5 +251,23 @@ h1 {
   .card-container, .card-container-description {
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+@media (max-width: 575px) {
+  .titlebar-browse h1 {
+    margin: auto 0;
+  }
+  .titlebar-browse h2 {
+    position: relative;
+  }
+}
+
+@media (max-width: 399px) {
+  .titlebar-browse h1 {
+    font-size: 1.5em;
+  }
+  .titlebar-browse h2 {
+    font-size: 1em;
   }
 }

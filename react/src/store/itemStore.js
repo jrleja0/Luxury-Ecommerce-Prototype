@@ -80,25 +80,29 @@ export default function (state = initState, action) {
       newState.favoriteItems = action.items
       break;
     case GET_FAVORITE:
-      newState.items = newState.items.map(item => {
+      const addFavorite = item => {
         if (item.id === action.id) {
           item.favorite = true;
         }
         return item;
-      });
-      favorite =
+      };
+      newState.items = newState.items.map(addFavorite); // updates newState.items
+      newState.favoriteItems = newState.favoriteItems.map(addFavorite); // updates newState.favoriteItems
+      favorite =  // updates newState.item
         newState.item.id === action.id ?
         true : newState.item.favorite;
       newState.item = Object.assign({}, newState.item, { favorite });
       break;
     case REMOVE_FAVORITE:
-      newState.items = newState.items.map(item => {
+      const deleteFavorite = item => {
         if (item.id === action.id) {
           item.favorite = false;
         }
         return item;
-      });
-      favorite =
+      };
+      newState.items = newState.items.map(deleteFavorite); // updates newState.items
+      newState.favoriteItems = newState.favoriteItems.map(deleteFavorite); // updates newState.favoriteItems
+      favorite =  // updates newState.item
         newState.item.id === action.id ?
         false : newState.item.favorite;
       newState.item = Object.assign({}, newState.item, { favorite });

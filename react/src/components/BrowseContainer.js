@@ -34,7 +34,10 @@ const BrowseContainer = (props) => {
 
   return (
     <div>
-      <h1>Browse Items</h1>
+      <div className="titlebar-browse">
+        <h2>{'< SecondDibs >'}</h2>
+        <h1>Browse Items</h1>
+      </div>
       <div>
         <Toolbar
           style={styles.toolbar}
